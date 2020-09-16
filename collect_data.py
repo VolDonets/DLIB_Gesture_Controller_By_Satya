@@ -28,7 +28,7 @@ window_height = 190
 skip_frames = 3
 frame_gap = 0
 
-directory = 'train_images_h'
+directory = 'no_ok_train_images_h'
 box_file = 'boxes_h.txt'
 
 if cleanup:

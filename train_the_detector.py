@@ -34,6 +34,8 @@ cols = 5
 rows = int(np.ceil(no_of_samples / cols))
 plt.figure(figsize=(cols * cols, rows * cols))
 
+print("cols" + str(cols * cols) + " rows:" + str(rows * cols))
+
 for i in range(no_of_samples):
     d_box = data[i][1][0]
     left, top, right, bottom = d_box.left(), d_box.top(), d_box.right(), d_box.bottom()
@@ -52,13 +54,19 @@ bounding_boxes = [tuple_value[1] for tuple_value in data.values()]
 
 options = dlib.simple_object_detector_training_options()
 options.add_left_right_image_flips = False
-options.C = 10
+options.C = 8
+
+print(options.detection_window_size)
+
 st = time.time()
 #detector = dlib.train_simple_object_detector(images[:split], bounding_boxes[:split], options)
 detector = dlib.train_simple_object_detector(images, bounding_boxes, options)
 print('Training Completed, Total Time taken: {:.2f} seconds'.format(time.time() - st))
 
-file_name = 'Hand_Detector.svm'
+print(options)
+exit()
+
+file_name = 'models/Hand_Detector_v8_c8.svm'
 detector.save(file_name)
 
 win_det = dlib.image_window()
