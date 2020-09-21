@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import pyautogui as pyg
 import shutil
 
-file_name = 'models/Hand_Detector_v6_c20.svm'
+file_name = 'models/Hand_Detector_v10_c10_t4.svm'
 detector = dlib.simple_object_detector(file_name)
 
 cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
@@ -25,12 +25,14 @@ while (True):
     ret, frame = cap.read()
     if not ret:
         break
-    frame = cv2.flip(frame, 1)
+    #frame = cv2.flip(frame, 1)
     frame_counter += 1
     fps = (frame_counter / (time.time() - start_time))
     copy = frame.copy()
+    #qprint("frame.shape[1]=" + str(frame.shape[1]) + ", " + "frame.shape[0]" + str(frame.shape[0]))
     new_width = int(frame.shape[1] / scale_factor)
     new_height = int(frame.shape[0] / scale_factor)
+    print("new frame sizes: " + str(new_height) + " " + str(new_width))
     resized_frame = cv2.resize(copy, (new_width, new_height))
     detections = detector(resized_frame)
     for detection in (detections):

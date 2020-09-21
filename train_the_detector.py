@@ -10,6 +10,7 @@ import pyautogui as pyg
 import shutil
 
 directory = 'train_images_h'
+#directory = 'no_ok_train_images_h'
 box_file = 'boxes_h.txt'
 data = {}
 image_indexes = [int(img_name.split('.')[0]) for img_name in os.listdir(directory)]
@@ -54,19 +55,14 @@ bounding_boxes = [tuple_value[1] for tuple_value in data.values()]
 
 options = dlib.simple_object_detector_training_options()
 options.add_left_right_image_flips = False
-options.C = 8
-
-print(options.detection_window_size)
+options.C = 10
 
 st = time.time()
 #detector = dlib.train_simple_object_detector(images[:split], bounding_boxes[:split], options)
 detector = dlib.train_simple_object_detector(images, bounding_boxes, options)
-print('Training Completed, Total Time taken: {:.2f} seconds'.format(time.time() - st))
 
-print(options)
-exit()
 
-file_name = 'models/Hand_Detector_v8_c8.svm'
+file_name = 'models/Hand_Detector_v10_c10_t4.svm'
 detector.save(file_name)
 
 win_det = dlib.image_window()

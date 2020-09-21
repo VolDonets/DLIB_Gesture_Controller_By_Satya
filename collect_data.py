@@ -51,7 +51,7 @@ while (True):
     ret, frame = cap.read()
     if not ret:
         break
-    frame = cv2.flip(frame, 1)
+    #frame = cv2.flip(frame, 1)
     orig = frame.copy()
     if initial_wait > 60:
         frame_gap += 1
