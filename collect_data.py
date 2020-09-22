@@ -25,11 +25,9 @@ x1, y1 = 0, 0
 window_width = 190  # 140
 window_height = 190
 
-skip_frames = 3
-frame_gap = 0
 
-directory = 'no_ok_train_images_h'
-box_file = 'boxes_h.txt'
+directory = 'super_trains/train_images'
+box_file = 'super_trains/boxes_h.txt'
 
 if cleanup:
     if os.path.exists(directory):
@@ -45,38 +43,33 @@ fr = open(box_file, 'a')
 if not os.path.exists(directory):
     os.mkdir(directory)
 
-initial_wait = 0
+isPushedS = False
 
 while (True):
     ret, frame = cap.read()
     if not ret:
         break
-    #frame = cv2.flip(frame, 1)
+    frame = cv2.flip(frame, 1)
     orig = frame.copy()
-    if initial_wait > 60:
-        frame_gap += 1
-        if x1 + window_width < frame.shape[1]:
-            x1 += 4
-            time.sleep(0.1)
-        elif y1 + window_height + 270 < frame.shape[1]:
-            y1 += 80
-            x1 = 0
-            frame_gap = 0
-            initial_wait = 0
-        else:
-            break
+    if cv2.waitKey(1) == ord('s'):
+        isPushedS = True
 
-    else:
-        initial_wait += 1
-    if frame_gap == skip_frames:
+    cv2.rectangle(frame, (x1, y1), (x1 + window_width, y1 + window_height), (0, 255, 0), 3)
+    cv2.imshow('frame', frame)
+    if isPushedS:
         img_name = str(counter) + '.png'
         img_full_name = directory + '/' + str(counter) + '.png'
         cv2.imwrite(img_full_name, orig)
         fr.write('{}:({},{},{},{}),'.format(counter, x1, y1, x1 + window_width, y1 + window_height))
         counter += 1
-        frame_gap = 0
-    cv2.rectangle(frame, (x1, y1), (x1 + window_width, y1 + window_height), (0, 255, 0), 3)
-    cv2.imshow('frame', frame)
+        if x1 + window_width < frame.shape[1]:
+            x1 += 4
+        elif y1 + window_height + 270 < frame.shape[1]:
+            y1 += 80
+            x1 = 0
+        else:
+            break
+    isPushedS = False
     if cv2.waitKey(1) == ord('q'):
         break
 
