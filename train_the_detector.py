@@ -10,8 +10,15 @@ import pyautogui as pyg
 import shutil
 
 #directory = 'train_images_h'
-directory = 'no_ok_train_images_h'
-box_file = 'boxes_h.txt'
+#directory = 'no_ok_train_images_h'
+#box_file = 'boxes_h.txt'
+
+directory = "super_trains/train_images"
+box_file = "super_trains/boxes_h.txt"
+
+#directory = "super_trains_2/train_images"
+#box_file = "super_trains_2/boxes_h.txt"
+
 data = {}
 image_indexes = [int(img_name.split('.')[0]) for img_name in os.listdir(directory)]
 np.random.shuffle(image_indexes)
@@ -62,7 +69,7 @@ st = time.time()
 detector = dlib.train_simple_object_detector(images, bounding_boxes, options)
 
 
-file_name = 'models/Hand_Detector_v11_c15_super.svm'
+file_name = 'models/Hand_Detector_v14_c15_super.svm'
 detector.save(file_name)
 
 win_det = dlib.image_window()

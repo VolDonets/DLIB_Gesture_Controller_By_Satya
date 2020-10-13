@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import pyautogui as pyg
 import shutil
 
-file_name = 'models/Hand_Detector_v11_c15_super.svm'
+file_name = 'models/Hand_Detector_v14_c15_super.svm'
 detector = dlib.simple_object_detector(file_name)
 
 cv2.namedWindow('frame', cv2.WINDOW_NORMAL)

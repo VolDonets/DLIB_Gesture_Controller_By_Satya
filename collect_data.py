@@ -11,7 +11,7 @@ import shutil
 
 # automate the annotation process
 
-cleanup = True
+cleanup = False
 
 cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
 
